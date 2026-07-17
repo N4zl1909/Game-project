@@ -1,41 +1,45 @@
 import random
 
-oyundurumu = True
+is_running = True
 
-while oyundurumu:
-    corap = random.randint(1, 100)
-    hak = 10
+while is_running:
+    # Generates a random number between 1 and 100 (representing the hidden sock)
+    hidden_item = random.randint(1, 100)
+    attempts = 10
 
     while True:
-        if hak > 0:
-            tahmin = int(input("Tahminini gir: "))
+        if attempts > 0:
+            try:
+                guess = int(input("Enter your guess: "))
+            except ValueError:
+                print("Invalid input! Please enter a number.")
+                continue
         else:
-            print("Kazanamadın! Oyun bitti. Sayı: {}".format(corap))
+            print("You lost! Game over. The number was: {}".format(hidden_item))
             break
 
-        fark = abs(tahmin - corap)
+        difference = abs(guess - hidden_item)
 
-        if tahmin != corap:
-            hak -= 1
+        if guess != hidden_item:
+            attempts -= 1
 
-
-            if fark <= 3:
-                print("ÇOK SICAK ")
-            elif fark <= 10:
-                print("SICAK ")
-            elif fark <= 20:
-                print("SOĞUK ")
+            if difference <= 3:
+                print("VERY HOT 🔥")
+            elif difference <= 10:
+                print("HOT ☀️")
+            elif difference <= 20:
+                print("COLD ❄️")
             else:
-                print("ÇOK SOĞUK ")
+                print("VERY COLD 🧊")
 
-            print("Kalan hak: {}".format(hak))
+            print("Remaining attempts: {}".format(attempts))
         else:
-            print("Kazandınız!  Doğru sayı: {}".format(corap))
+            print("You won! The correct number was: {}".format(hidden_item))
             break
 
-    devam = input("Oyuna devam etmek istiyor musun? (E/H): ")
-    if devam == "E" or devam == "e":
+    play_again = input("Do you want to play again? (Y/N): ")
+    if play_again.upper() == "Y":
         continue
-    elif devam == "H" or devam == "h":
-        print("Tekrar görüşmek üzere!")
-        oyundurumu = False
+    elif play_again.upper() == "N":
+        print("See you next time!")
+        is_running = False
